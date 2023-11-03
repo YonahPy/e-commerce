@@ -11,11 +11,12 @@
     </div>
 
     <div class="controls">
-      <form action="#" method="post">
-        <div class="searchbox">
-          <button class="search-icon">
+      <form action="" method="post">
+        <div  class="searchbox" :class="{'searchbox-show': showSearch}">
+          <button type="button" class="search-icon" @click="showSearch = !showSearch">
             <img src="./assets/icons/search.png" alt="search">
           </button>
+          <input type="search" placeholder="Search" class="search-input" v-if="showSearch">
         </div>
       </form>
 
@@ -80,6 +81,17 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 
+export default{
+  data(){
+    return{
+      showSearch: false
+    }
+  },
+  methods:{
+
+  }
+}
+
 </script>
 
 <style >
@@ -138,6 +150,28 @@ p,a,span,div{
   background-color: transparent;
   cursor: pointer;
 
+}
+.searchbox{
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+.search-input{
+  border: none;
+  background-color: rgb(236, 230, 230);
+  height: 35px;
+  width: 250px;
+  padding-left: 10px;
+  border-radius: 20px;
+  
+
+}
+.search-input:focus{
+  outline: none;
+}
+.searchbox-show{
+  margin-right: 10px;
+  
 }
 .main-categories{
   margin-left: 20px;
