@@ -4,5 +4,5 @@ from products import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', views.get_data_api )
+    path('api/', views.get_categories_data_api )
 ]
