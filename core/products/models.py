@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 class CategoryPrimary(models.Model):
     name = models.CharField('nome', max_length=250)
@@ -6,6 +7,7 @@ class CategoryPrimary(models.Model):
     description = models.CharField('descrição', max_length=400, blank=True, null=True)
     
     def __str__(self) -> str:
+        
         return self.name
 
 class SubCategory(models.Model):
@@ -35,7 +37,15 @@ class Product(models.Model):
     count_rating = models.IntegerField('Quantidade de avaliações', null=True, blank=True)
     color = models.ManyToManyField(ColorProduct, verbose_name='Imagens das Cores Disponiveis', related_name='products')
     display_color = models.CharField('Cor atual', max_length=100)
+    slug = models.SlugField('slug', unique=True, null=True, blank=True, max_length=300)
     
+    
+    def get_absolute_url(self):
+        return f'/{self.category.slug}/{self.product_title}/'
+    
+    def create_slug(self, *args, **kwargs):
+        self.slug = slugify(self.product_title)
+        super(Product, self).save(*args, **kwargs)
     
     
     def __str__(self) -> str:
