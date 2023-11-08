@@ -53,10 +53,7 @@
   padding: 25px;
   
 }
-.carousel__slide img{
-    
-   
-}
+
 .carousel__viewport {
   perspective: 2000px;
   

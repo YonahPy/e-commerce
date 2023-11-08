@@ -19,10 +19,18 @@
         <h2>New Arrivals</h2>
       </div>
       <div class="carousel">
-      <carousel :items-to-show="3.95" :autoplay="2000" :wrap-around="true" :transition="500" :products="getNewArrivalsProducts" :pauseAutoplayOnHover="true">
+      <carousel :items-to-show="3.3" :autoplay="2000" :wrap-around="true" :transition="500" :products="getNewArrivalsProducts" :pauseAutoplayOnHover="true">
 
       </carousel>
     </div>
+    </section>
+
+    <section class="best-sellers">
+      
+      <TabView :products="getBestSellersProducts">
+        
+      </TabView>
+
     </section>
   </main>
 </template>
@@ -30,11 +38,13 @@
 <script>
 import axios from 'axios'
 import carousel from '../components/carousel.vue'
+import TabView from '../components/TabView.vue'
 
 export default {
   
   components:{
-    carousel
+    carousel,
+    TabView,
   },
   data(){
     return{
@@ -51,9 +61,15 @@ export default {
       if (this.listProducts){
         return this.listProducts.filter(function(product) {
         return product.category === 29
-      });
-      } 
-      
+        });
+      }   
+    },
+    getBestSellersProducts(){
+      if(this.listProducts){
+        return this.listProducts.filter(function(product){
+          return product.category === 27 || product.category === 28
+        })
+      }
     }
   },
   methods:{
