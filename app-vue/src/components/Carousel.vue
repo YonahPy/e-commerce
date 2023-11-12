@@ -5,9 +5,9 @@
             <div>
                 <img :src="p.image" alt="">
             </div>
-            <div>
+            <div class="carousel-text">
                 <p>{{ p.product_title }}</p>
-                <p>{{ p.price }}</p>
+                <p class="price">R$ {{ p.price }}</p>
             </div>
         </div>
         
@@ -49,6 +49,14 @@
   </script>
 
 <style scoped>
+
+.carousel-text p{
+  font-size: 13px;
+  margin-top: 7px;
+}
+.price{
+  font-weight: bold;
+}
 .carousel__slide {
   padding: 25px;
   

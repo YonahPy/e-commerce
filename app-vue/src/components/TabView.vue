@@ -5,8 +5,8 @@
 
         <div>
             <ul>
-                <li @click="showWomenProducts = true">Women</li>
-                <li @click="showWomenProducts = false">Men</li> 
+                <li @click="showWomenProducts = true" :class="{'isactive': showWomenProducts}">Women</li>
+                <li @click="showWomenProducts = false" :class="{'isactive': !showWomenProducts}">Men</li> 
                 
             </ul>
             
@@ -21,7 +21,7 @@
             </div>
             <div class="cart-text">
                 <p>{{ p.product_title }}</p>
-                <p>{{ p.price }}</p>
+                <p class="price">R$ {{ p.price }}</p>
             </div>
         </div>
     </div>
@@ -59,13 +59,43 @@ export default{
 </script>
 
 <style scoped>
+.isactive{
+    color: #e49e6c;
+    text-decoration: underline #e49e6c;
+    text-underline-offset: 10px;
+    text-decoration-thickness: 2px;
+}
 .tab-view{
     margin-inline: 10%;
 }
 .header{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 60px;
+}
+.header h2{
+    font-size: 30px;
+}
+.content{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.cart-image{
+    width: 100%;
+    display: flex;
+    justify-content: center;
     
+}
+
+.cart-text p{
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.price{
+    font-weight: bold;
 }
 ul{
     list-style: none;

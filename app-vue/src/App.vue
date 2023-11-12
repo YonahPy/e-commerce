@@ -1,15 +1,32 @@
 <template>
   <nav class="nav-header">
     <div class="main-categories">
-      <RouterLink to="#">Women</RouterLink>
-      <RouterLink to="#">Men</RouterLink>
-      <RouterLink to="#">Kids</RouterLink>
+      <div class="drop-down-categories" @click="toggleDropdown('women')">
+        <p >Women <img src="./assets/icons/down-arrow.png" alt="icon-down-arrow"></p>
+        <div class="drop-down" v-show="activeDropdown === 'women'">
+          <DropDown :categories="filterCategoriesWomen"></DropDown>
+        </div>
+      </div>
+
+      <div class="drop-down-categories" @click="toggleDropdown('men')">
+        <p >Men <img src="./assets/icons/down-arrow.png" alt="icon-down-arrow"></p>
+        <div class="drop-down" v-show="activeDropdown === 'men'">
+          <DropDown :categories="filterCategoriesMen"></DropDown>
+        </div>
+      </div>
+
+      <div class="drop-down-categories" @click="toggleDropdown('kids')">
+        <p>Kids <img src="./assets/icons/down-arrow.png" alt="icon-down-arrow"></p>
+        <div class="drop-down" v-show="activeDropdown === 'kids'">
+          <DropDown :categories="filterCategoriesKids"></DropDown>
+        </div>
+      </div>
     </div>
 
     <div class="home">
       <RouterLink to="#">Fashion</RouterLink>
     </div>
-
+    
     <div class="controls">
       <form action="" method="post">
         <div  class="searchbox" :class="{'searchbox-show': showSearch}">
@@ -53,9 +70,9 @@
     <nav class="footer-nav">
       <div class="footer-main-categories">
         <h3>NAVIGATION</h3>
-        <RouterLink to="#">WOMEN</RouterLink>
-        <RouterLink to="#">MEN</RouterLink>
-        <RouterLink to="#">KIDS</RouterLink>
+        <p @click="pushProducts('women')">WOMEN</p>
+        <p @click="pushProducts('men')">MEN</p>
+        <p @click="pushProducts('kids')">KIDS</p>
         <p>BRANDS</p>
       </div>
 
@@ -80,16 +97,84 @@
 
 <script>
 import { RouterLink, RouterView } from 'vue-router'
+import DropDown from './components/DropDown.vue'
+import axios from 'axios'
+import { useStore } from './stores/store'
 
 export default{
   data(){
     return{
-      showSearch: false
+      showSearch: false,
+      listCategories: null,
+      activeDropdown: null,
     }
   },
-  methods:{
+  components:{
+    DropDown,
+  },
+  mounted(){
+    this.getDataCategories()
+  },
+  computed:{
+    filterCategoriesWomen(){
+      if (this.listCategories){
+        return this.listCategories.filter(function(category){
+          return category.category_primary === 2
+        })
+      } else{
+        return []
+      }
+    },
+    filterCategoriesMen(){
+      if (this.listCategories){
+        return this.listCategories.filter(function(category){
+          return category.category_primary === 3
+        })
+      } else{
+        return []
+      }
+    },
+    filterCategoriesKids(){
+      if (this.listCategories){
+        return this.listCategories.filter(function(category){
+          return category.category_primary === 4
+        })
+      } else{
+        return []
+      }
+    },
 
-  }
+  },
+  methods:{
+    getDataCategories(){
+      axios.get('http://127.0.0.1:8000/api/sub-category/')
+      .then(response => {
+        this.listCategories = response.data;
+      })
+      .catch(error => {
+        console.log('Erro ao buscar produtos', error)
+      })
+    },
+    toggleDropdown(category) {
+      this.activeDropdown = this.activeDropdown === category ? null : category;
+    },
+    pushProducts(category){
+      this.$router.push('/products')
+      if (category === 'women'){
+        useStore().currentCategory = "Women's Clothing";
+        useStore().idCurrentCategory = 1
+
+      } else if (category === 'men'){
+        useStore().currentCategory = "Men's Clothing";
+        useStore().idCurrentCategory = 13
+      } else{
+        useStore().currentCategory = "Boys' kids Clothes";
+        useStore().idCurrentCategory = 24
+      }
+    }
+  },
+
+  
 }
 
 </script>
@@ -122,7 +207,7 @@ h1,h2,h3,h4,h5{
   font-family: 'DM Serif Display', serif;
   color: var(--black);
 }
-p,a,span,div{
+p,a,span,div, button{
   font-family: 'Manrope', sans-serif;
   color: var(--black);
 }
@@ -175,13 +260,27 @@ p,a,span,div{
 }
 .main-categories{
   margin-left: 20px;
+  display: flex;
+  position: relative;
 }
-.main-categories a{
+.drop-down-categories{
+  margin-inline: 5px;
+}
+.main-categories p{
   margin-left: 15px;
   font-size: 18px;
+  
 }
-.main-categories a:hover{
+.main-categories p:hover{
   color: var(--primary-orange);
+}
+.main-categories p img{
+  height: 8px;
+  margin-left: 3px;
+}
+.drop-down{
+  position: absolute;
+  
 }
 .home a{
   font-size: 25px;
@@ -197,6 +296,7 @@ footer{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+  margin-top: 30px;
 }
 
 .footer-socials{
@@ -222,7 +322,7 @@ footer{
   display: flex;
   flex-direction: column;
 }
-.footer-main-categories a:hover{
+.footer-main-categories p:hover{
   color: var(--primary-orange);
   cursor: pointer;
 }

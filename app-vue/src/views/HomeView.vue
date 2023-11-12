@@ -142,7 +142,7 @@ export default {
     height: 35%;
   }
 
-  /* Carousel*/
+  /* New arrivals*/
   .new-arrivals{
     display: flex;
     flex-direction: column;
@@ -157,6 +157,12 @@ export default {
    width: 80vw;
   }
   
+  /* Best Seller*/
+
+  .best-sellers{
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
  
 </style>
 
