@@ -24,7 +24,7 @@
     </div>
 
     <div class="home">
-      <RouterLink to="#">Fashion</RouterLink>
+      <RouterLink to="/">Fashion</RouterLink>
     </div>
     
     <div class="controls">
@@ -269,6 +269,7 @@ p,a,span,div, button{
 .main-categories p{
   margin-left: 15px;
   font-size: 18px;
+  cursor: pointer;
   
 }
 .main-categories p:hover{
