@@ -15,6 +15,7 @@
     </div>
     
     <div class="content">
+        
         <div class="cart" v-for="p in filterBestSellerProducts" :key="p.id">
             <div class="cart-image">
                 <img :src="p.image" :alt="p.product_title">
@@ -24,36 +25,32 @@
                 <p class="price">R$ {{ p.price }}</p>
             </div>
         </div>
+        
     </div>
 </div>
 </template>
 
 <script>
 export default{
-    props:['products'],
+    props:['womenProducts', 'menProducts'],
     data(){
         return{
             showWomenProducts: true,
-            womenProducts: null,
-            menProducts:null,
-            
+                
         }
     },
     computed:{
         filterBestSellerProducts(){
-            if(this.products){
+            if(this.womenProducts && this.menProducts){
                 if (this.showWomenProducts){
-                    return this.products.filter((product) => {
-                        return product.category === 27
-                    }).slice(0, 8)
+                    return this.womenProducts.slice(0, 8)
                 } else{
-                    return this.products.filter((product) => {
-                        return product.category === 28
-                    }).slice(0, 8)
+                    return this.menProducts.slice(0, 8)
                 }
             }
             return [];  
         }
+        
     }
 }
 </script>

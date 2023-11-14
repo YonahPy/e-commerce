@@ -19,7 +19,7 @@
         <h2>New Arrivals</h2>
       </div>
       <div class="carousel">
-      <carousel :items-to-show="3.3" :autoplay="2000" :wrap-around="true" :transition="500" :products="getNewArrivalsProducts" :pauseAutoplayOnHover="true">
+      <carousel :items-to-show="3.3" :autoplay="2000" :wrap-around="true" :transition="500" :products="newArrivals" :pauseAutoplayOnHover="true">
 
       </carousel>
     </div>
@@ -27,7 +27,7 @@
 
     <section class="best-sellers">
       
-      <TabView :products="getBestSellersProducts">
+      <TabView :women-products="womenBestSellers" :men-products="menBestSellers">
         
       </TabView>
 
@@ -37,7 +37,7 @@
 
 <script>
 import axios from 'axios'
-import carousel from '../components/carousel.vue'
+import carousel from '../components/Carousel.vue'
 import TabView from '../components/TabView.vue'
 
 export default {
@@ -48,35 +48,41 @@ export default {
   },
   data(){
     return{
-      listProducts: null,
+      newArrivals: null,
+      womenBestSellers: null,
+      menBestSellers: null,
       
     }
   },
   mounted(){
-    this.getDataProducts()
+    this.getNewArrivalsProducts()
+    this.getWomenBestSellersProducts()
+    this.getMenBestSellersProducts()
   },
-  computed:{
-    getNewArrivalsProducts(){
-
-      if (this.listProducts){
-        return this.listProducts.filter(function(product) {
-        return product.category === 29
-        });
-      }   
-    },
-    getBestSellersProducts(){
-      if(this.listProducts){
-        return this.listProducts.filter(function(product){
-          return product.category === 27 || product.category === 28
-        })
-      }
-    }
-  },
+  
   methods:{
-    getDataProducts(){
-      axios.get('http://127.0.0.1:8000/api/products/')
+    getNewArrivalsProducts(){
+      axios.get(`http://127.0.0.1:8000/api/products/category/${29}`)
       .then(response => {
-        this.listProducts = response.data
+        this.newArrivals = response.data
+      })
+      .catch(error => {
+        console.log('Erro ao buscar produtos', error)
+      })
+    },
+    getWomenBestSellersProducts(){
+      axios.get(`http://127.0.0.1:8000/api/products/category/${27}`)
+      .then(response => {
+        this.womenBestSellers = response.data
+      })
+      .catch(error => {
+        console.log('Erro ao buscar produtos', error)
+      })
+    },
+    getMenBestSellersProducts(){
+      axios.get(`http://127.0.0.1:8000/api/products/category/${28}`)
+      .then(response => {
+        this.menBestSellers = response.data
       })
       .catch(error => {
         console.log('Erro ao buscar produtos', error)

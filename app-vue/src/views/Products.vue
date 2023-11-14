@@ -9,7 +9,7 @@
         </div>
         
         <div class="products">
-            <RouterLink :to="{name:'productDetails', params:{id: product.id}}" class="cart-products" v-for="product in filterProducts" :key="product.id">
+            <RouterLink :to="{name:'productDetails', params:{id: product.id}}" class="cart-products" v-for="product in products" :key="product.id">
                <div class="cart-image">
                 <img :src="product.alternative_image" :alt="product.product_title" v-if="product.alternative_image">
                 <img :src="product.image" :alt="product.product_title" v-else>
@@ -57,7 +57,7 @@ export default{
     },
     methods:{
         fetchDataProducts(){
-            axios.get('http://127.0.0.1:8000/api/products/')
+            axios.get(`http://127.0.0.1:8000/api/products/category/${this.idCurrentCategory}`)
             .then(response => {
                 this.products = response.data
             })
@@ -74,13 +74,7 @@ export default{
         idCurrentCategory(){
             return useStore().idCurrentCategory
         },
-        filterProducts(){
-            if (this.products){
-                return this.products.filter(product => {
-                    return product.category === this.idCurrentCategory
-                })
-            }
-        }
+        
         
     }
 }
