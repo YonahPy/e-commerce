@@ -12,14 +12,14 @@
 
       
     </section>
-
+    
     <section class="new-arrivals">
       
-      <div>
+      <div @click="pushToNewArrivals">
         <h2>New Arrivals</h2>
       </div>
       <div class="carousel">
-      <carousel :items-to-show="3.3" :autoplay="2000" :wrap-around="true" :transition="500" :products="newArrivals" :pauseAutoplayOnHover="true">
+      <carousel :items-to-show="3.3" :autoplay="2000" :wrap-around="true" :transition="500" :products="newArrivals" :pauseAutoplayOnHover="true" @clickedProduct="pushToProduct" >
 
       </carousel>
     </div>
@@ -27,7 +27,7 @@
 
     <section class="best-sellers">
       
-      <TabView :women-products="womenBestSellers" :men-products="menBestSellers">
+      <TabView :women-products="womenBestSellers" :men-products="menBestSellers" @clickedBestSellerProduct="pushToBestSellerProduct">
         
       </TabView>
 
@@ -38,7 +38,8 @@
 <script>
 import axios from 'axios'
 import carousel from '../components/Carousel.vue'
-import TabView from '../components/TabView.vue'
+import TabView from '../components/TabView.vue';
+import { useStore } from '../stores/store'
 
 export default {
   
@@ -89,6 +90,16 @@ export default {
       })
     },
     
+    pushToProduct(idProduct, idCategory, nameCategory){
+      this.$router.push(`/product-details/${idProduct}`)
+    },
+    pushToNewArrivals(){
+      useStore().setCategory('New Arrivals', 29)
+      this.$router.push('products/')
+    },
+    pushToBestSellerProduct(idProduct, idCategory, nameCategory){
+      this.$router.push(`/product-details/${idProduct}`)
+    }
   }
 }
   
@@ -158,6 +169,7 @@ export default {
   .new-arrivals h2{
     font-size: 30px;
     margin-bottom: 60px;
+    cursor: pointer;
   }
   .carousel{
    width: 80vw;

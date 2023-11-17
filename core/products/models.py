@@ -39,6 +39,8 @@ class Product(models.Model):
     display_color = models.CharField('Cor atual', max_length=100)
     slug = models.SlugField('slug', unique=True, null=True, blank=True, max_length=300)
     
+    def name_category(self):
+        return self.category.name
     
     def get_absolute_url(self):
         return f'/{self.category.slug}/{self.product_title}/'

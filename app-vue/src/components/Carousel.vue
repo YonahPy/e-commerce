@@ -1,13 +1,14 @@
 <template>
     <carousel>
       <slide v-for="p in firstTenProducts" :key="p.id">
-        <div class="carousel__item">
+        <div class="carousel__item" @click="handleClick(p.id, p.category, p.name_category)">
             <div>
                 <img :src="p.image" alt="">
             </div>
             <div class="carousel-text">
                 <p>{{ p.product_title }}</p>
                 <p class="price">R$ {{ p.price }}</p>
+                
             </div>
         </div>
         
@@ -24,6 +25,8 @@
   
   import 'vue3-carousel/dist/carousel.css'
   import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+  import { useStore } from '../stores/store';
+import axios from 'axios';
   
   export default {
     name: 'App',
@@ -34,6 +37,9 @@
       Navigation,
     },
     props:['products'],
+
+    emits:['clickedProduct'],
+
     computed: {
     firstTenProducts() {
         if (this.products) {
@@ -43,8 +49,19 @@
       }
       
     },
-  },
     
+  },
+  methods:{
+    
+    handleClick(idProduct, idCategory, nameCategory){
+      this.$emit('clickedProduct', idProduct, idCategory, nameCategory)
+
+      useStore().setCategory(nameCategory, idCategory)
+        
+      }  
+      
+  }
+
   }
   </script>
 
@@ -53,6 +70,9 @@
 .carousel-text p{
   font-size: 13px;
   margin-top: 7px;
+}
+.carousel__item{
+  cursor: pointer;
 }
 .price{
   font-weight: bold;

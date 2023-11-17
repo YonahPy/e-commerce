@@ -16,7 +16,7 @@
     
     <div class="content">
         
-        <div class="cart" v-for="p in filterBestSellerProducts" :key="p.id">
+        <div class="cart" v-for="p in filterBestSellerProducts" :key="p.id" @click="handleClick(p.id, p.category, p.name_category)">
             <div class="cart-image">
                 <img :src="p.image" :alt="p.product_title">
             </div>
@@ -33,6 +33,7 @@
 <script>
 export default{
     props:['womenProducts', 'menProducts'],
+    emits:['clickedBestSellerProduct'],
     data(){
         return{
             showWomenProducts: true,
@@ -49,8 +50,13 @@ export default{
                 }
             }
             return [];  
-        }
-        
+        }   
+    },
+    methods:{
+        handleClick(idProduct, idCategory, nameCategory){
+            this.$emit('clickedBestSellerProduct', idProduct, idCategory, nameCategory)
+            useStore().setCategory(nameCategory, idCategory)
+      } 
     }
 }
 </script>
@@ -77,6 +83,9 @@ export default{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
+}
+.cart{
+    cursor: pointer;
 }
 
 .cart-image{

@@ -161,15 +161,11 @@ export default{
     pushProducts(category){
       this.$router.push('/products')
       if (category === 'women'){
-        useStore().currentCategory = "Women's Clothing";
-        useStore().idCurrentCategory = 1
-
+        useStore().setCategory("Women's Clothing", 1)
       } else if (category === 'men'){
-        useStore().currentCategory = "Men's Clothing";
-        useStore().idCurrentCategory = 13
+        useStore().setCategory("Men's Clothing", 13);
       } else{
-        useStore().currentCategory = "Boys' kids Clothes";
-        useStore().idCurrentCategory = 24
+        useStore().setCategory("Boys' kids Clothes", 24);
       }
     }
   },

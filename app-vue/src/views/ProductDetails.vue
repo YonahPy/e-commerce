@@ -49,8 +49,12 @@
         </div>
     </section>
     <section>
-        <div>
-            <carousel :items-to-show="3.3" :autoplay="2000" :wrap-around="true" :transition="500" :products="productsCarousel" :pauseAutoplayOnHover="true">
+        <div class="similar-products">
+            <h2>Similar Products</h2>
+            
+        </div>
+        <div class="similar-products-carousel">
+            <carousel :items-to-show="3.3" :autoplay="2000" :wrap-around="true" :transition="500" :products="productsCarousel" :pauseAutoplayOnHover="true" @clickedProduct="renderProduct" >
 
             </carousel>
         </div>
@@ -62,6 +66,8 @@ import axios from 'axios';
 import carousel from '../components/Carousel.vue';
 import { useStore } from '../stores/store';
 
+
+
 export default{
     components:{
         carousel
@@ -69,21 +75,30 @@ export default{
     data(){
         return{
             products: null,
-            productsCarousel: null
+            productsCarousel: null,
+            idCategoryOfCurrentProduct: null,
+            nameCategoryOfCurrentProduct: null
         }
     },
     mounted(){
         const productId = this.$route.params.id;
         this.getDataProducts(productId)
-        const categoryId = useStore().idCurrentCategory;
-        this.getProductsFromCurrentCategory(categoryId)
+        const store = useStore()
+        this.getProductsFromCurrentCategory(store.idCurrentCategory)
     },
-    
+    updated(){
+        const store = useStore()
+        store.setCategory(this.nameCategoryOfCurrentProduct, this.idCategoryOfCurrentProduct)
+        this.getProductsFromCurrentCategory(store.idCurrentCategory)
+    },
     methods:{
         getDataProducts(productId){
             axios.get(`http://127.0.0.1:8000/api/products/${productId}/`)
             .then(response => {
-                this.products = response.data
+                this.products = response.data;
+                this.idCategoryOfCurrentProduct = this.products.category;
+                this.nameCategoryOfCurrentProduct = this.products.name_category;
+                
             })
             .catch(error => {
                 console.log('Erro ao buscar os dados', error)
@@ -97,6 +112,10 @@ export default{
             .catch(error => {
                 console.log('Erro ao buscar os dados', error)
             })
+        },
+        renderProduct(idProduct, idCategory, nameCategory){
+            this.$router.push(`/product-details/${idProduct}`)
+            this.getDataProducts(idProduct)
         }
     },
 }
@@ -206,5 +225,16 @@ export default{
     border: 1px solid #171416;
     margin-left: 15px;
 }
-
+.similar-products-carousel{
+   margin-inline: 4vw;
+    
+}
+.similar-products h2{ 
+    margin-inline: 4vw;
+    font-size: 30px;
+    
+}
+.similar-products{
+    margin-bottom: 15px;
+}
 </style>

@@ -53,11 +53,16 @@ export default{
         RouterLink
     },
     mounted(){
-        this.fetchDataProducts()
+        const idCurrentCategory = useStore().idCurrentCategory
+        this.fetchDataProducts(idCurrentCategory)
+    },
+    updated(){
+        const idCurrentCategory = useStore().idCurrentCategory
+        this.fetchDataProducts(idCurrentCategory)
     },
     methods:{
-        fetchDataProducts(){
-            axios.get(`http://127.0.0.1:8000/api/products/category/${this.idCurrentCategory}`)
+        fetchDataProducts(idCategory){
+            axios.get(`http://127.0.0.1:8000/api/products/category/${idCategory}`)
             .then(response => {
                 this.products = response.data
             })
@@ -71,11 +76,7 @@ export default{
         currentCategory(){
             return useStore().currentCategory
         },
-        idCurrentCategory(){
-            return useStore().idCurrentCategory
-        },
-        
-        
+          
     }
 }
 </script>
