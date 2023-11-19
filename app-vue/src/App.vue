@@ -38,15 +38,15 @@
       </form>
 
       <div class="div-user">
-        <button class="button-user"><img src="./assets/icons/user.png" alt="user"></button>
+        <RouterLink to="#" class="button-user"><img src="./assets/icons/user.png" alt="user"></RouterLink>
       </div>
 
       <div class="div-favorite">
-        <button class="button-favorite"><img src="./assets/icons/love.png" alt="favorite"></button>
+        <RouterLink :to="{name: 'favorite'}" class="button-favorite"><img src="./assets/icons/love.png" alt="favorite"></RouterLink>
       </div>
 
       <div class="div-bag">
-        <button class="button-bag"><img src="./assets/icons/shopping-bag.png" alt="shopping-bag"></button>
+        <RouterLink to="#" class="button-bag"><img src="./assets/icons/shopping-bag.png" alt="shopping-bag"></RouterLink>
       </div>
 
 
@@ -223,14 +223,15 @@ p,a,span,div, button{
   width: 100%;
 
 }
-.controls button{
+
+.controls button, .div-user, .div-favorite, .div-bag{
   width: 25px;
   height: 25px;
   margin-right: 15px;
   border: none;
   background-color: transparent;
   cursor: pointer;
-
+  
 }
 .searchbox{
   display: flex;

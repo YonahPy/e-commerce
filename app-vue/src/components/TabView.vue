@@ -94,6 +94,10 @@ export default{
     justify-content: center;
     
 }
+.cart-image img{
+    width: 210px;
+    height: 190px;
+}
 
 .cart-text p{
     font-size: 13px;

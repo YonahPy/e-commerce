@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia'
+import { reactive } from 'vue';
 
 const STORAGE_KEY = 'app-vue';
 
@@ -6,13 +7,22 @@ export const useStore = defineStore({
     id: 'main',
     state: () => ({
         currentCategory: '',
-        idCurrentCategory: null
+        idCurrentCategory: null,
+        listFavoriteProducts: reactive([])
     }),
     actions:{
         setCategory(name, id){
             this.currentCategory = name;
             this.idCurrentCategory = id;
             this.persistState();
+        },
+
+        deleteItemFromFavoriteList(idProduct){
+            const index = this.listFavoriteProducts.findIndex((product) => product.id === idProduct);
+
+            if (index !== -1){
+                this.listFavoriteProducts.splice(index, 1);
+            }
         },
         persistState(){
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.$state));
