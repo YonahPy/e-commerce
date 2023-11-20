@@ -8,7 +8,8 @@ export const useStore = defineStore({
     state: () => ({
         currentCategory: '',
         idCurrentCategory: null,
-        listFavoriteProducts: reactive([])
+        listFavoriteProducts: reactive([]),
+        listShoppingCart: reactive([]),
     }),
     actions:{
         setCategory(name, id){
@@ -22,6 +23,13 @@ export const useStore = defineStore({
 
             if (index !== -1){
                 this.listFavoriteProducts.splice(index, 1);
+            }
+        },
+        deleteItemFromShoppingCart(idProduct){
+            const index = this.listShoppingCart.findIndex((product) => product.id === idProduct);
+
+            if(index !== -1){
+                this.listShoppingCart.splice(index, 1);
             }
         },
         persistState(){

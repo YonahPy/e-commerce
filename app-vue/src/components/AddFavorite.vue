@@ -1,5 +1,5 @@
 <template>
-    <button class="button-favorite" @click="handleClick" :class="{'isActive': isActive}">
+    <button class="button-favorite" @click="addProductsInFavoriteList" :class="{'isActive': isActive}">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
         <defs>
         </defs>
@@ -9,7 +9,7 @@
         </svg>
     </button>
 
-    <div v-if="products"></div>
+    
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default{
         this.productExistInList()
     },
     methods:{
-        handleClick(){     
+        addProductsInFavoriteList(){     
             this.isActive = !this.isActive
             const store = useStore()
 
@@ -41,13 +41,11 @@ export default{
         productExistInList(){
             const store = useStore();
             if (this.products){
-                store.listFavoriteProducts.forEach(product => {
                 const existInFavorites = store.listFavoriteProducts.some(item => item.id === this.products.id)
 
                 if(existInFavorites){
                     this.isActive = true
                 }
-            })
             }          
         }     
     }

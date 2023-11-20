@@ -46,7 +46,7 @@
       </div>
 
       <div class="div-bag">
-        <RouterLink to="#" class="button-bag"><img src="./assets/icons/shopping-bag.png" alt="shopping-bag"></RouterLink>
+        <RouterLink :to="{name: 'myCart'}" class="button-bag"><img src="./assets/icons/shopping-bag.png" alt="shopping-bag"></RouterLink>
       </div>
 
 

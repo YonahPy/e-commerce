@@ -34,7 +34,7 @@
                 
             </div>
             <div class="buttons-add">
-                <AddCart>
+                <AddCart :products="products">
 
                 </AddCart>
                 
