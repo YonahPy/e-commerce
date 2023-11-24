@@ -28,6 +28,10 @@
     </div>
     
     <div class="controls">
+      
+        <button class="login" @click="pushLogin">Login</button>
+      
+
       <form action="" method="post">
         <div  class="searchbox" :class="{'searchbox-show': showSearch}">
           <button type="button" class="search-icon" @click="showSearch = !showSearch">
@@ -167,6 +171,9 @@ export default{
       } else{
         useStore().setCategory("Boys' kids Clothes", 24);
       }
+    },
+    pushLogin(){
+      this.$router.push('/login')
     }
   },
 
@@ -222,6 +229,19 @@ p,a,span,div, button{
 .controls img{
   width: 100%;
 
+}
+
+.login {
+  background-color: #171416 !important;
+  color: white;
+  font-size: 16px;
+  width: 100px !important;
+  height: 40px !important;
+  border-radius: 10px;
+  
+}
+.login:hover{
+  background-color: #0e0c0d !important;
 }
 
 .controls button, .div-user, .div-favorite, .div-bag{

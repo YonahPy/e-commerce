@@ -28,7 +28,7 @@
             <div class="buttons" v-if="showButtons">
                 <ButtonDelete :width="'40%'" :font="'13px'" :height="'40px'"  :product="product.id">
                 </ButtonDelete>
-                <AddCart :width="'40%'" :font="'13px'" :height="'40px'">
+                <AddCart :width="'40%'" :font="'13px'" :height="'40px'" :products="products">
                 </AddCart>
             </div>  
         </div>
@@ -48,7 +48,7 @@ export default{
     },
     props:{
         products:{
-            type: Array,
+            type: Object,
             required: true
         },
         showButtons:{
@@ -65,7 +65,7 @@ export default{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     margin-inline: 4vw;
-    gap: 30px;
+    gap: 70px;
     
 }
 
@@ -106,5 +106,6 @@ export default{
     justify-content: space-between;
     margin-top: 15px;
     padding-right: 15px;
+    
 }
 </style>

@@ -25,6 +25,10 @@ export const useStore = defineStore({
                 this.listFavoriteProducts.splice(index, 1);
             }
         },
+        addToShoppingCart(product){
+            const cartProduct = { ...product, quantity: 1};
+            this.listShoppingCart.push(cartProduct)
+        },
         deleteItemFromShoppingCart(idProduct){
             const index = this.listShoppingCart.findIndex((product) => product.id === idProduct);
 

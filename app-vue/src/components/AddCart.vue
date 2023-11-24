@@ -46,7 +46,7 @@ export default{
                         this.message = '';
                     }, 2000)
                 } else{
-                    store.listShoppingCart.push(this.products)
+                    store.addToShoppingCart(this.products)
                     this.message = 'Produto adicionado ao carrinho';
                     setTimeout(() => {
                         this.message = '';
