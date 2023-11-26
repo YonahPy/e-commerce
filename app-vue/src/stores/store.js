@@ -10,12 +10,15 @@ export const useStore = defineStore({
         idCurrentCategory: null,
         listFavoriteProducts: reactive([]),
         listShoppingCart: reactive([]),
+        token: '',
+        
     }),
     actions:{
         setCategory(name, id){
             this.currentCategory = name;
             this.idCurrentCategory = id;
             this.persistState();
+            
         },
 
         deleteItemFromFavoriteList(idProduct){
@@ -35,6 +38,9 @@ export const useStore = defineStore({
             if(index !== -1){
                 this.listShoppingCart.splice(index, 1);
             }
+        },
+        setToken(token){
+            this.token = token
         },
         persistState(){
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.$state));

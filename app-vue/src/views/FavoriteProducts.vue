@@ -1,8 +1,10 @@
 <template>
-    <section>
-        <ProductCard :products="listFavoriteProducts" :show-buttons="true">
+    <section v-if="token">
+        <ProductCard :products="listFavoriteProducts" :show-buttons="true" v-if="token">
 
         </ProductCard>
+
+        <div v-else>ola mundo</div>
     </section>
 
 </template>
@@ -19,6 +21,9 @@ export default{
         listFavoriteProducts(){
             const store = useStore().listFavoriteProducts;
             return store
+        },
+        token(){
+            return useStore().token
         }
     }
 }

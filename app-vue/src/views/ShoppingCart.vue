@@ -1,7 +1,7 @@
 <template>
     <section>
         
-        <div>
+        <div v-if="token">
             
             <div class="titles">
                 <h3>Product</h3>
@@ -70,7 +70,11 @@ export default{
             return this.cartList.reduce((total, product) => {
                 return total + this.calculateTotal(product)
             }, 0)
+        },
+        token(){
+            return useStore().token
         }
+
     },
     methods:{
         increaseCount(product){

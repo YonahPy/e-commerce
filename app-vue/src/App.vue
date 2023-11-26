@@ -29,8 +29,9 @@
     
     <div class="controls">
       
-        <button class="login" @click="pushLogin">Login</button>
-      
+        <Login v-if="!token">
+
+        </Login>    
 
       <form action="" method="post">
         <div  class="searchbox" :class="{'searchbox-show': showSearch}">
@@ -41,8 +42,14 @@
         </div>
       </form>
 
-      <div class="div-user">
+      <div class="div-user" >
         <RouterLink to="#" class="button-user"><img src="./assets/icons/user.png" alt="user"></RouterLink>
+        
+        <div class="user-options">
+            <UserOptions>
+
+            </UserOptions>
+        </div>
       </div>
 
       <div class="div-favorite">
@@ -104,6 +111,8 @@ import { RouterLink, RouterView } from 'vue-router'
 import DropDown from './components/DropDown.vue'
 import axios from 'axios'
 import { useStore } from './stores/store'
+import Login from './components/ButtonLogin.vue'
+import UserOptions from './components/UserOptions.vue'
 
 export default{
   data(){
@@ -115,6 +124,8 @@ export default{
   },
   components:{
     DropDown,
+    Login,
+    UserOptions,
   },
   mounted(){
     this.getDataCategories()
@@ -147,6 +158,9 @@ export default{
         return []
       }
     },
+    token(){
+      return useStore().token
+    },
 
   },
   methods:{
@@ -172,9 +186,8 @@ export default{
         useStore().setCategory("Boys' kids Clothes", 24);
       }
     },
-    pushLogin(){
-      this.$router.push('/login')
-    }
+    
+    
   },
 
   
@@ -229,19 +242,6 @@ p,a,span,div, button{
 .controls img{
   width: 100%;
 
-}
-
-.login {
-  background-color: #171416 !important;
-  color: white;
-  font-size: 16px;
-  width: 100px !important;
-  height: 40px !important;
-  border-radius: 10px;
-  
-}
-.login:hover{
-  background-color: #0e0c0d !important;
 }
 
 .controls button, .div-user, .div-favorite, .div-bag{
@@ -300,6 +300,12 @@ p,a,span,div, button{
   position: absolute;
   
 }
+
+.div-user:hover .user-options{
+  display: block;
+}
+
+
 .home a{
   font-size: 25px;
 }
