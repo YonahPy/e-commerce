@@ -22,9 +22,12 @@
             <div class="buttons">
                 <input type="submit" value="Enter"  :disabled="disableButton">
             
-                <div class="register">
-                    <button @click="pushLogin">Login</button>
-                </div>
+                
+                
+                <ButtonLogin :width="'40%'" :height="'40px'">
+                </ButtonLogin>
+                
+               
             </div>
             
         </form>
@@ -34,8 +37,12 @@
 <script>
 import axios from 'axios';
 import { useStore } from '../stores/store'
+import ButtonLogin from '../components/ButtonLogin.vue';
 
 export default{
+    components:{
+        ButtonLogin
+    },
     data(){
         return{
             username: '',
@@ -82,7 +89,7 @@ export default{
                     email: this.email
                 });
                 this.message = ''
-                useStore().setToken(response.data)
+                useStore().setToken(response.data.token)
                 this.$router.push('/')
             } catch (error){
                 console.log('Erro no registro', error.response.data);
@@ -134,6 +141,7 @@ div input:focus{
 .buttons{
     width: 60%;
     display: flex;
+    align-items: center;
 }
 .buttons input{
     width: 40%;
@@ -147,22 +155,8 @@ div input:focus{
 .buttons input:hover{
     background-color: #0e0c0d;
 }
-.buttons .register{
-    width: 40%;
-    
-}
-.buttons .register button{
-    width: 100%;
-    margin-top: 10px;
-    background-color: white;
-    font-size: 18px;
-    border: 1px solid #0e0c0d;
-    cursor: pointer;
-}
-.buttons .register button:hover{
-    background-color: #171416;
-    color: white;
-}
+
+
 
 
 </style>

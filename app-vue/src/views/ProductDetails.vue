@@ -34,11 +34,11 @@
                 
             </div>
             <div class="buttons-add">
-                <AddCart :products="products">
+                <AddCart :products="products" v-if="token">
 
                 </AddCart>
                 
-                <AddFavorite :products="products">
+                <AddFavorite :products="products" v-if="token">
                     
                 </AddFavorite>
             </div>
@@ -66,6 +66,7 @@ import { useStore } from '../stores/store';
 import AddFavorite from '../components/AddFavorite.vue';
 import AddCart from '../components/AddCart.vue';
 
+
 export default{
     components:{
         carousel,
@@ -91,6 +92,11 @@ export default{
         const store = useStore()
         store.setCategory(this.nameCategoryOfCurrentProduct, this.idCategoryOfCurrentProduct)
         this.getProductsFromCurrentCategory(store.idCurrentCategory)
+    },
+    computed:{
+        token(){
+            return useStore().token
+        }
     },
     methods:{
         getDataProducts(productId){

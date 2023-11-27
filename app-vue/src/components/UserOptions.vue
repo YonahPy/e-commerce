@@ -12,18 +12,17 @@ export default{
     methods:{
         async logout(){
             let token = useStore().token;
-            
+
             try{               
                 if(token){
-
                     const response = await axios.post('http://127.0.0.1:8000/api-auth/logout/', {}, {
                         headers: {
-                            Authorization:`Token ${token.token}`
+                            Authorization:`Token ${token}`
                         }
                     });
 
                     if (response.status === 200) {
-                        useStore().setToken(null);
+                        useStore().clearToken()
                         this.$router.push('/login');
                     } else {
                         console.error('Logout request failed:', response.statusText);

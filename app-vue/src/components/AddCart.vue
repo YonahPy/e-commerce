@@ -33,6 +33,7 @@ export default{
             message: '',
         }
     },
+    
     methods:{
         addProductsInShoppingCart(){
             const store = useStore()

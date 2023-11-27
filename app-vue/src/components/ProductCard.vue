@@ -4,27 +4,35 @@
         <div class="cart-products" v-for="product in products" :key="product.id">
             <RouterLink :to="{name:'productDetails', params:{id: product.id}}" >
                 <div class="cart-image">
-                <img :src="product.alternative_image" :alt="product.product_title" v-if="product.alternative_image">
-                <img :src="product.image" :alt="product.product_title" v-else>
+                    <img :src="product.alternative_image" :alt="product.product_title" v-if="product.alternative_image">
+                    <img :src="product.image" :alt="product.product_title" v-else>
                 </div>
+            </RouterLink>
                 <div class="cart-info">
+                    
                     <p>{{ product.product_title }}</p>
             
                     <div class="rating">
                         <div class="rating-line">
-                            <div class="icon-rating">
+                            <div class="icon-rating">                          
                                 <img src="../assets/icons/star.png" alt="icon-reviews">
                             </div>
                             <p v-if="product.average_rating">{{ product.average_rating  }}</p>
                             <p v-else>4.2</p>
                             <p v-if="product.count_rating">({{ product.count_rating }})</p>
                             <p v-else>(822)</p>
+
+                            <AddFavorite :circle="true" :products="product">
+                            </AddFavorite>
                         </div>
                         <p class="price">R$ {{ product.price }}</p>
                     </div>
+                    <div class="button-favorite">
+                        
+                    </div>
                 </div>
             
-            </RouterLink>
+            
             <div class="buttons" v-if="showButtons">
                 <ButtonDelete :width="'40%'" :font="'13px'" :height="'40px'"  :product="product.id">
                 </ButtonDelete>
@@ -39,12 +47,15 @@
 import { RouterLink } from 'vue-router';
 import ButtonDelete from '../components/ButtonDelete.vue';
 import AddCart from '../components/AddCart.vue';
+import AddFavorite from '../components/AddFavorite.vue';
+
 
 export default{
     components:{
         RouterLink,
         ButtonDelete,
         AddCart,
+        AddFavorite,
     },
     props:{
         products:{
@@ -72,6 +83,7 @@ export default{
 .cart-image img{
     width: 100%;
     margin-bottom: 10px;
+    position: relative;
 }
 
 
@@ -108,4 +120,5 @@ export default{
     padding-right: 15px;
     
 }
+
 </style>

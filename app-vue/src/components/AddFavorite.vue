@@ -1,5 +1,5 @@
 <template>
-    <button class="button-favorite" @click="addProductsInFavoriteList" :class="{'isActive': isActive}">
+    <button class="button-favorite" @click="addProductsInFavoriteList" :class="{'isActive': isActive, 'circle': circle}">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
         <defs>
         </defs>
@@ -20,7 +20,7 @@ export default{
             isActive: false,
         }
     },
-    props:['products'],
+    props:['products', 'circle'],
     mounted(){
         this.store = useStore()
         this.productExistInList()
@@ -28,7 +28,8 @@ export default{
     methods:{
         addProductsInFavoriteList(){     
             this.isActive = !this.isActive
-            const store = useStore()
+            const store = useStore()  
+            
 
             if (this.isActive && this.products ){
                store.listFavoriteProducts.push(this.products)
@@ -58,10 +59,21 @@ export default{
     height: 50px;
     border-radius: 7px;
     cursor: pointer;
-
     width: 15%;
     border: 1px solid #171416;
     margin-left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+.circle{
+    width: 10%;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    align-items: end;
+    
 }
 .button-favorite svg{
     width: 100%;

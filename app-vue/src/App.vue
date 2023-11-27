@@ -29,13 +29,14 @@
     
     <div class="controls">
       
-        <Login v-if="!token">
-
-        </Login>    
+        <div class="login">
+          <Login v-if="!token" :width="'100%'" :height="'40px'">
+          </Login>
+        </div>
 
       <form action="" method="post">
         <div  class="searchbox" :class="{'searchbox-show': showSearch}">
-          <button type="button" class="search-icon" @click="showSearch = !showSearch">
+          <button type="button" class="search-icon" @click="showSearch = !showSearch" :disabled="!token">
             <img src="./assets/icons/search.png" alt="search">
           </button>
           <input type="search" placeholder="Search" class="search-input" v-if="showSearch">
@@ -43,9 +44,9 @@
       </form>
 
       <div class="div-user" >
-        <RouterLink to="#" class="button-user"><img src="./assets/icons/user.png" alt="user"></RouterLink>
+        <p class="button-user"><img src="./assets/icons/user.png" alt="user"></p>
         
-        <div class="user-options">
+        <div class="user-options" v-if="token">
             <UserOptions>
 
             </UserOptions>
@@ -252,6 +253,11 @@ p,a,span,div, button{
   background-color: transparent;
   cursor: pointer;
   
+}
+.login{
+  margin-right: 12px;
+  width: 100px;
+
 }
 .searchbox{
   display: flex;

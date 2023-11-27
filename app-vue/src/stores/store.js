@@ -18,7 +18,7 @@ export const useStore = defineStore({
             this.currentCategory = name;
             this.idCurrentCategory = id;
             this.persistState();
-            
+            token: ''
         },
 
         deleteItemFromFavoriteList(idProduct){
@@ -41,6 +41,10 @@ export const useStore = defineStore({
         },
         setToken(token){
             this.token = token
+        },
+        clearToken(){
+            this.token = '';
+            localStorage.removeItem('token')
         },
         persistState(){
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.$state));
