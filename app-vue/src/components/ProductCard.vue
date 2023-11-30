@@ -84,6 +84,7 @@ export default{
     width: 100%;
     margin-bottom: 10px;
     position: relative;
+    z-index: 1;
 }
 
 

@@ -14,6 +14,7 @@
     </section>
     
     <section class="new-arrivals">
+     
       
       <div @click="pushToNewArrivals">
         <h2>New Arrivals</h2>
@@ -63,27 +64,27 @@ export default {
   
   methods:{
     getNewArrivalsProducts(){
-      axios.get(`http://127.0.0.1:8000/api/products/category/${29}`)
+      axios.get(`http://127.0.0.1:8000/api/products/category/${29}/?page=${1}`)
       .then(response => {
-        this.newArrivals = response.data
+        this.newArrivals = response.data.results
       })
       .catch(error => {
         console.log('Erro ao buscar produtos', error)
       })
     },
     getWomenBestSellersProducts(){
-      axios.get(`http://127.0.0.1:8000/api/products/category/${27}`)
+      axios.get(`http://127.0.0.1:8000/api/products/category/${27}/?page=${1}`)
       .then(response => {
-        this.womenBestSellers = response.data
+        this.womenBestSellers = response.data.results
       })
       .catch(error => {
         console.log('Erro ao buscar produtos', error)
       })
     },
     getMenBestSellersProducts(){
-      axios.get(`http://127.0.0.1:8000/api/products/category/${28}`)
+      axios.get(`http://127.0.0.1:8000/api/products/category/${28}/?page=${1}`)
       .then(response => {
-        this.menBestSellers = response.data
+        this.menBestSellers = response.data.results
       })
       .catch(error => {
         console.log('Erro ao buscar produtos', error)
@@ -182,6 +183,27 @@ export default {
     margin-bottom: 80px;
   }
  
+ @media screen and (max-width: 900px){
+  .image-baner{
+    width: 50vw;
+    height: 55vh;
+  }
+ }
+ @media screen and (max-width: 840px){
+  .banner{
+    flex-direction: column;
+  }
+  .image-baner{
+   
+    width: 100vw;
+    height: 70vh;
+    background-position: center bottom;
+  }
+  .text-banner{
+    width: 100vw;
+    height: 60vh;
+  }
+ }
 </style>
 
 

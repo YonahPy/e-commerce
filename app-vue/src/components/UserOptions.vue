@@ -59,4 +59,14 @@ export default{
 .user-options button:hover{
   background-color: #373536;
 }
+@media screen and (max-width: 780px){
+    .user-options{
+        right: 25vw;
+    }
+}
+@media screen and (max-width: 675px){
+    .user-options{
+        right: 35vw;
+    }
+}
 </style>

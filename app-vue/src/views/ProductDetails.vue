@@ -88,10 +88,14 @@ export default{
         const store = useStore()
         this.getProductsFromCurrentCategory(store.idCurrentCategory)
     },
-    updated(){
-        const store = useStore()
-        store.setCategory(this.nameCategoryOfCurrentProduct, this.idCategoryOfCurrentProduct)
-        this.getProductsFromCurrentCategory(store.idCurrentCategory)
+    watch:{
+        idCategoryOfCurrentProduct(newId, oldId){
+            const store = useStore();
+            if(newId !== oldId){
+                store.setCategory(this.nameCategoryOfCurrentProduct, newId);
+                this.getProductsFromCurrentCategory(newId)
+            }        
+        }
     },
     computed:{
         token(){
@@ -114,7 +118,7 @@ export default{
         getProductsFromCurrentCategory(categoryId){
             axios.get(`http://127.0.0.1:8000/api/products/category/${categoryId}/`)
             .then(response => {
-                this.productsCarousel = response.data
+                this.productsCarousel = response.data.results
             })
             .catch(error => {
                 console.log('Erro ao buscar os dados', error)

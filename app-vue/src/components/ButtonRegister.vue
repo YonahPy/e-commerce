@@ -32,6 +32,7 @@ button{
     border: 1px solid #0e0c0d;
     cursor: pointer;
     border-radius: 7px;
+    transition: background-color 0.2s ease;
 }
 button:hover{
     background-color: #171416;

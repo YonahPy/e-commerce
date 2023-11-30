@@ -2,7 +2,6 @@
 <div class="tab-view">
     <div class="header">
         <h2>Best Sellers</h2>
-
         <div>
             <ul>
                 <li @click="showWomenProducts = true" :class="{'isactive': showWomenProducts}">Women</li>
@@ -67,6 +66,7 @@ export default{
     text-decoration: underline #e49e6c;
     text-underline-offset: 10px;
     text-decoration-thickness: 2px;
+    
 }
 .tab-view{
     margin-inline: 10%;

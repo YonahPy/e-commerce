@@ -40,11 +40,11 @@ export const useStore = defineStore({
             }
         },
         setToken(token){
-            this.token = token
+            this.token = token;
         },
         clearToken(){
             this.token = '';
-            localStorage.removeItem('token')
+            localStorage.removeItem('token');
         },
         persistState(){
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.$state));

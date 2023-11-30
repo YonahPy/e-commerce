@@ -38,6 +38,16 @@ const router = createRouter({
       path:'/register',
       name: 'register',
       component: () => import('../views/Register.vue')
+    },
+    {
+      path: '/search/:search',
+      name: 'search',
+      component: () => import('../views/SearchView.vue')
+    },
+    {
+      path:'/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('../views/NotFound.vue')
     }
     
   ]

@@ -1,67 +1,63 @@
 <template>
   <nav class="nav-header">
-    <div class="main-categories">
-      <div class="drop-down-categories" @click="toggleDropdown('women')">
-        <p >Women <img src="./assets/icons/down-arrow.png" alt="icon-down-arrow"></p>
-        <div class="drop-down" v-show="activeDropdown === 'women'">
-          <DropDown :categories="filterCategoriesWomen"></DropDown>
+      <div class="main-categories" :class="{'is-active':menu}">
+        <div class="drop-down-categories" @click="toggleDropdown('women')">
+          <p >Women <img src="./assets/icons/down-arrow.png" alt="icon-down-arrow"></p>
+          <div class="drop-down" v-show="activeDropdown === 'women'">
+            <DropDown :categories="filterCategoriesWomen"></DropDown>
+          </div>
+        </div>
+        <div class="drop-down-categories" @click="toggleDropdown('men')">
+          <p >Men <img src="./assets/icons/down-arrow.png" alt="icon-down-arrow"></p>
+          <div class="drop-down" v-show="activeDropdown === 'men'">
+            <DropDown :categories="filterCategoriesMen"></DropDown>
+          </div>
+        </div>
+        <div class="drop-down-categories" @click="toggleDropdown('kids')">
+          <p>Kids <img src="./assets/icons/down-arrow.png" alt="icon-down-arrow"></p>
+          <div class="drop-down" v-show="activeDropdown === 'kids'">
+            <DropDown :categories="filterCategoriesKids"></DropDown>
+          </div>
         </div>
       </div>
-
-      <div class="drop-down-categories" @click="toggleDropdown('men')">
-        <p >Men <img src="./assets/icons/down-arrow.png" alt="icon-down-arrow"></p>
-        <div class="drop-down" v-show="activeDropdown === 'men'">
-          <DropDown :categories="filterCategoriesMen"></DropDown>
-        </div>
+      <div class="home">
+        <RouterLink to="/">Fashion</RouterLink>
       </div>
-
-      <div class="drop-down-categories" @click="toggleDropdown('kids')">
-        <p>Kids <img src="./assets/icons/down-arrow.png" alt="icon-down-arrow"></p>
-        <div class="drop-down" v-show="activeDropdown === 'kids'">
-          <DropDown :categories="filterCategoriesKids"></DropDown>
-        </div>
-      </div>
-    </div>
-
-    <div class="home">
-      <RouterLink to="/">Fashion</RouterLink>
-    </div>
-    
-    <div class="controls">
       
-        <div class="login">
-          <Login v-if="!token" :width="'100%'" :height="'40px'">
-          </Login>
+      <div class="controls">
+      
+          <div class="login">
+            <Login v-if="!token" :width="'100%'" :height="'40px'">
+            </Login>
+          </div>
+        <div>
+          <div  class="searchbox" :class="{'searchbox-show': showSearch}">
+            <button type="button" class="search-icon" @click="showSearch = !showSearch" :disabled="!token">
+              <img src="./assets/icons/search.png" alt="search">
+            </button>
+            <input type="search" v-model="search" placeholder="Search" class="search-input" v-if="showSearch" @keydown.enter="handleSearch">
+          </div>
         </div>
-
-      <form action="" method="post">
-        <div  class="searchbox" :class="{'searchbox-show': showSearch}">
-          <button type="button" class="search-icon" @click="showSearch = !showSearch" :disabled="!token">
-            <img src="./assets/icons/search.png" alt="search">
-          </button>
-          <input type="search" placeholder="Search" class="search-input" v-if="showSearch">
+        <div class="div-user" :style="{'display': display}">
+          <p class="button-user"><img src="./assets/icons/user.png" alt="user"></p>
+      
+          <div class="user-options" v-if="token">
+              <UserOptions>
+              </UserOptions>
+          </div>
         </div>
-      </form>
-
-      <div class="div-user" >
-        <p class="button-user"><img src="./assets/icons/user.png" alt="user"></p>
-        
-        <div class="user-options" v-if="token">
-            <UserOptions>
-
-            </UserOptions>
+        <div class="div-favorite" :style="{'display': display}">
+          <RouterLink :to="{name: 'favorite'}" class="button-favorite"><img src="./assets/icons/love.png" alt="favorite"></RouterLink>
         </div>
+        <div class="div-bag" :style="{'display': display}">
+          <RouterLink :to="{name: 'myCart'}" class="button-bag"><img src="./assets/icons/shopping-bag.png" alt="shopping-bag"></RouterLink>
+        </div>
+    
+
+      <div  class="toggle-label" @click="menu = !menu"  :class="{'is-active': menu}"
+      :style="{'display': display}">
+        <div class="toggle-button" id="toggle" ></div>
       </div>
-
-      <div class="div-favorite">
-        <RouterLink :to="{name: 'favorite'}" class="button-favorite"><img src="./assets/icons/love.png" alt="favorite"></RouterLink>
-      </div>
-
-      <div class="div-bag">
-        <RouterLink :to="{name: 'myCart'}" class="button-bag"><img src="./assets/icons/shopping-bag.png" alt="shopping-bag"></RouterLink>
-      </div>
-
-
     </div>
 
 
@@ -121,6 +117,9 @@ export default{
       showSearch: false,
       listCategories: null,
       activeDropdown: null,
+      search: '',
+      menu: false,
+      display: 'block'
     }
   },
   components:{
@@ -164,11 +163,20 @@ export default{
     },
 
   },
+  watch:{
+    showSearch(newValue){
+      if(newValue === true){
+        this.display = 'none';
+      } else{
+        this.display = 'block';
+      }
+    }
+  },
   methods:{
     getDataCategories(){
       axios.get('http://127.0.0.1:8000/api/sub-category/')
       .then(response => {
-        this.listCategories = response.data;
+        this.listCategories = response.data.results;
       })
       .catch(error => {
         console.log('Erro ao buscar produtos', error)
@@ -187,8 +195,9 @@ export default{
         useStore().setCategory("Boys' kids Clothes", 24);
       }
     },
-    
-    
+    handleSearch(){
+      this.$router.push({name: 'search', params: {search: this.search}});
+    } 
   },
 
   
@@ -204,6 +213,7 @@ export default{
   text-decoration: none;
   
 }
+
 :root{
   --primary-white :#fff5ee;
   --primary-orange: #e49e6c;
@@ -235,6 +245,7 @@ p,a,span,div, button{
   align-items: center;
 
 }
+
 .controls{
   display: flex;
   align-items: center;
@@ -263,19 +274,24 @@ p,a,span,div, button{
   display: flex;
   align-items: center;
   height: 40px;
+
 }
 .search-input{
   border: none;
   background-color: rgb(236, 230, 230);
-  height: 35px;
-  width: 250px;
+  height: 45px;
+  width: 300px;
   padding-left: 10px;
   border-radius: 20px;
+  padding-right: 5px;
   
-
+}
+.search-input::placeholder{
+  font-size: 17px;
 }
 .search-input:focus{
   outline: none;
+  border: 1px solid #e49e6c;
 }
 .searchbox-show{
   margin-right: 10px;
@@ -304,7 +320,7 @@ p,a,span,div, button{
 }
 .drop-down{
   position: absolute;
-  
+
 }
 
 .div-user:hover .user-options{
@@ -351,6 +367,8 @@ footer{
 .footer-main-categories{
   display: flex;
   flex-direction: column;
+  justify-content: center;
+ 
 }
 .footer-main-categories p:hover{
   color: var(--primary-orange);
@@ -359,4 +377,157 @@ footer{
 .footer-nav h3{
   margin-bottom: 10px;
 }
+
+/*menu */*
+
+.toggle-label {
+  display: none;
+  cursor: pointer;
+}
+
+.toggle-button {
+  display: none;
+  width: 30px;
+  height: 3px;
+  background-color: #333;
+  position: relative;
+  transition: transform 0.4s, opacity 0.4s;
+  
+}
+
+.toggle-button::before,
+.toggle-button::after {
+  content: '';
+  width: 30px;
+  height: 3px;
+  background-color: #333;
+  position: absolute;
+  transition: transform 0.4s, opacity 0.4s;
+}
+
+.toggle-button::before {
+  top: -10px;
+}
+
+.toggle-button::after {
+  top: 10px;
+}
+
+.toggle-label.is-active  .toggle-button::before {
+  transform: translateY(10px) rotate(-0deg);
+  background-color: white;
+}
+
+.toggle-label.is-active  .toggle-button::after {
+  transform: translateY(-10px) rotate(-90deg);
+  background-color: white;
+}
+
+.toggle-label.is-active  .toggle-button {
+  transform: rotate(45deg);
+  background-color: transparent;
+}
+
+@media screen and (max-width: 800px){
+  footer{
+    grid-template-columns: 1fr;
+    gap: 60px;
+    margin-bottom: 40px;
+  }
+  .footer-socials{
+    padding-inline: 40px;
+  }
+}
+@media screen and (max-width: 780px) {
+  .toggle-label {
+    display: block;
+    
+}
+.toggle-button {
+  display: block;
+}
+  .nav-header {
+    position: relative;
+  }
+  .main-categories {
+    display: none; 
+  }
+  .is-active.main-categories{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #171416;
+    top: 0vh;
+    right: 0;
+    width: 50vw;
+    height: 100vw;
+    
+
+  }
+  
+  .is-active.main-categories p{
+    color: white;
+    margin-top: 10px;
+    padding-top:10px ;
+  }
+
+  .drop-down-categories {
+    display: none;
+  }
+
+  .is-active .drop-down-categories {
+    display: block;
+  }
+
+  .controls{
+    width: 50%;
+    display: flex;
+    justify-content: space-eve;
+    align-items: center;
+  }
+  .controls .div-user, .div-favorite, .div-bag{
+    display: flex;
+    align-items: center;
+    margin-right: 35px;
+    width: 7vw;
+
+  }
+  .searchbox .search-icon{
+    display: flex;
+    align-items: center;
+    margin-right: 25px;
+    width: 30px;
+  }
+  
+  .home{
+    margin-left: 40px;
+  }
+  .searchbox-show .search-input{
+    width: 40vw;
+    height: 50px;
+  }
+  .searchbox-show .search-input::placeholder{
+    font-size: 16px;
+  }
+  .searchbox-show + .toggle-label {
+    display: none;
+  }
+}
+@media screen and (max-width: 675px){
+  .footer-nav{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .controls{  
+    width: 80vw;
+  }
+  .controls .div-user, .div-favorite, .div-bag{
+    width: 30px;
+  }
+  
+}
+
 </style>
