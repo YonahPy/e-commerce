@@ -11,7 +11,9 @@ export const useStore = defineStore({
         listFavoriteProducts: reactive([]),
         listShoppingCart: reactive([]),
         token: '',
-        
+        totalPrice: null,
+        isPaymentComplete: false,
+        isCheckoutAllowed: false,
     }),
     actions:{
         setCategory(name, id){
@@ -45,6 +47,12 @@ export const useStore = defineStore({
         clearToken(){
             this.token = '';
             localStorage.removeItem('token');
+        },
+        setTotalPrice(total){
+            this.totalPrice = total;
+        },
+        clearTotalPrice(){
+            this.totalPrice = '';
         },
         persistState(){
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.$state));

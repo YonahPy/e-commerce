@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { useStore } from '../stores/store'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +46,18 @@ const router = createRouter({
       component: () => import('../views/SearchView.vue')
     },
     {
+      path: '/checkout',
+      name: 'checkout',
+      component: () => import('../views/Checkout.vue')
+    },
+    {
+      path:'/successful-payment',
+      name: 'successPayment',
+      component: () => import('../views/SuccessPayment.vue'),
+      meta: {requiresPayment: true},
+
+    },
+    {
       path:'/:pathMatch(.*)*',
       name: 'NotFound',
       component: () => import('../views/NotFound.vue')
@@ -52,5 +65,30 @@ const router = createRouter({
     
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const requiresPayment = to.matched.some(record => record.meta.requiresPayment)
+  const isPaymentComplete = useStore().isPaymentComplete
+  const isCheckoutAllowed = useStore().isCheckoutAllowed;
+
+  if (to.path === '/checkout'){
+    if(isCheckoutAllowed){
+      next()
+    } else{
+      next('/:pathMatch(.*)*')
+    }
+  } else if (requiresPayment){
+    if(isPaymentComplete){
+      next();
+    }else{
+      next('/:pathMatch(.*)*');
+    }
+  } else{
+    next();
+  } 
+  
+ 
+   
+});
 
 export default router

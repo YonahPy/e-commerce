@@ -41,8 +41,8 @@
                     <p class="cart-total">CART TOTAL <strong>  R$ {{ totalAmount }}</strong></p>
                     <p>Shipping & taxes calculated at checkout</p>
 
-                    <Checkout class="checkout">
-
+                    <Checkout class="checkout" @click="pushCheckout">
+                        Checkout
                     </Checkout>
                 </div>
             </div>
@@ -94,9 +94,12 @@ export default{
     },
     computed:{
         totalAmount(){
-            return this.cartList.reduce((total, product) => {
+            const total = this.cartList.reduce((total, product) => {
                 return total + this.calculateTotal(product)
             }, 0)
+            useStore().setTotalPrice(total)
+            
+            return total 
         },
         token(){
             return useStore().token
@@ -124,6 +127,10 @@ export default{
         },
         deleteProduct(idProduct){
             useStore().deleteItemFromShoppingCart(idProduct)
+        },
+        pushCheckout(){
+            useStore().isCheckoutAllowed = true
+            this.$router.push('/checkout')
         }
     }
     
@@ -281,5 +288,24 @@ h2{
     height: 40px;
     width: 150px;
     margin-left: 20px;
+}
+
+@media screen and (max-width:1290px){
+    .container{
+       
+        grid-template-columns: 100%;
+    }
+    .total-pay{
+        position: static;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 50vw;
+        margin: 0 auto;
+    }
+    .titles{
+        width: 100%;
+    }
 }
 </style>

@@ -32,7 +32,7 @@
           </div>
         <div>
           <div  class="searchbox" :class="{'searchbox-show': showSearch}">
-            <button type="button" class="search-icon" @click="showSearch = !showSearch" :disabled="!token">
+            <button type="button" class="search-icon" @click="showSearch = !showSearch">
               <img src="./assets/icons/search.png" alt="search">
             </button>
             <input type="search" v-model="search" placeholder="Search" class="search-input" v-if="showSearch" @keydown.enter="handleSearch">
@@ -301,9 +301,11 @@ p,a,span,div, button{
   margin-left: 20px;
   display: flex;
   position: relative;
+  z-index: 2;
 }
 .drop-down-categories{
   margin-inline: 5px;
+  z-index: 2;
 }
 .main-categories p{
   margin-left: 15px;
@@ -383,6 +385,8 @@ footer{
 .toggle-label {
   display: none;
   cursor: pointer;
+  z-index: 3;
+  
 }
 
 .toggle-button {

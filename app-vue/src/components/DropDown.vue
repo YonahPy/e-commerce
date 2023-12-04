@@ -31,7 +31,7 @@ export default{
     border-radius: 10px;
     padding: 15px;
     border: 2px solid #373536;
-    z-index: 10;
+    
 }
 .dropdown p{
     color: white;
@@ -45,7 +45,7 @@ export default{
 
 @media screen and (max-width: 780px){
     .dropdown{
-        width: 290px;
+        width: 110%;
         margin-top: 20px;
     }
 }

@@ -50,6 +50,7 @@ class Login(APIView):
             return Response({'token': token.key}, status=status.HTTP_202_ACCEPTED)
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+    
         
     
 class Logout(APIView):
@@ -60,4 +61,15 @@ class Logout(APIView):
         request.user.auth_token.delete()
         return Response({'message': 'Logout sucessful'}, status=status.HTTP_200_OK)
 
- 
+
+class UserInformation(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        
+        name = request.user.username
+        email = request.user.email
+        if name and email:
+            return Response({'name': name, 'email': email}, status=status.HTTP_200_OK)
+        return Response({'error': 'Erro ao buscar os dados'}, status=status.HTTP_400_BAD_REQUEST)

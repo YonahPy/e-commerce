@@ -1,8 +1,13 @@
 <template>
     <div>
-        <button class="checkout">Checkout <img src="../assets/icons/icons8-trancar.svg" alt="icon-checkout"></button>
+        <button class="checkout" >
+            <slot></slot>
+            <img src="../assets/icons/icons8-trancar.svg" alt="icon-checkout">
+        </button>
     </div>
 </template>
+
+
 
 <style scoped>
 .checkout{
