@@ -5,7 +5,7 @@ from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q 
     
 class SubCategoryList(generics.ListCreateAPIView):
-    queryset = SubCategory.objects.all()
+    queryset = SubCategory.objects.all().order_by('name')
     serializer_class = SubCategorySerializer
 
 class ColorProductList(generics.ListCreateAPIView):

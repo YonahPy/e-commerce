@@ -174,7 +174,7 @@ export default{
   },
   methods:{
     getDataCategories(){
-      axios.get('http://127.0.0.1:8000/api/sub-category/')
+      axios.get('https://e-commerce-production-5744.up.railway.app/api/sub-category/')
       .then(response => {
         this.listCategories = response.data.results;
       })
