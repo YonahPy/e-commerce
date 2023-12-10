@@ -9,4 +9,4 @@ urlpatterns = [
     path('api-auth/', include('authentication.urls')),
     path('api/checkout/', include('payment.urls')),
     
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
