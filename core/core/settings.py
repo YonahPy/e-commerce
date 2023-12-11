@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:E2*bgaB5aA6GdE-aDf*gdc1EF6Fc6gED@postgres.railway.internal:5432/railway',
+        default='postgresql://postgres:E2*bgaB5aA6GdE-aDf*gdc1EF6Fc6gED@viaduct.proxy.rlwy.net:37435/railway',
         conn_max_age=1800,
     )
 }
