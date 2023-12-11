@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+from decouple import config
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -84,14 +87,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-
-
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('POSTGRES_DB', 'e-commerce'),
+        'USER': config('POSTGRES_USER', 'postgres'),
+        'PASSWORD': config('POSTGRES_PASSWORD', 'Delena9@'),
+        'HOST': config('DBHOST', 'localhost'),
+        'PORT': '5432',
+    }
+}
+
+'''DATABASES = {
     'default': dj_database_url.config(
         default='postgresql://postgres:E2*bgaB5aA6GdE-aDf*gdc1EF6Fc6gED@viaduct.proxy.rlwy.net:37435/railway',
         conn_max_age=1800,
     )
-}
+}'''
 
 ''' 'default': {
         'ENGINE': 'django.db.backends.postgresql',
