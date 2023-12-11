@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -85,16 +85,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': dj_database_url.config(
+        default='postgresql://postgres:A2*aee2EcAA35FGE1*3Deab5eG2cc65e@monorail.proxy.rlwy.net:25453/railway',
+        conn_max_age=600,
+        ssl_require=not DEBUG
+    )
+}
+
+''' 'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME':'e-commerce',
         'USER':'postgres',
         'PASSWORD':'Delena9@',
         'HOST':'localhost',
         'PORT':'5432'
-    }
-}
-
+    } '''
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
