@@ -84,9 +84,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:A2*aee2EcAA35FGE1*3Deab5eG2cc65e@monorail.proxy.rlwy.net:25453/railway',
+        default='postgresql://postgres:Delena9@@roundhouse.proxy.rlwy.net:13723/e-commerce',
         conn_max_age=600,
         ssl_require=not DEBUG
     )
